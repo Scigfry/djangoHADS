@@ -21,12 +21,14 @@ class Filma(models.Model):
     sinopsia = models.CharField(max_length=500)
     bozkak = models.IntegerField()
 
+    
+class FilmaBozkatzailea(models.Model):
+    erabiltzailea_id = models.IntegerField(unique=True)
+
 class Erabiltzailea(models.Model):
     auth_user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
-
-class FilmaBozkatzailea(models.Model):
-    erabiltzailea = models.ForeignKey(Erabiltzailea, on_delete=models.CASCADE)
+    filma_bozkatzailea = models.OneToOneField(FilmaBozkatzailea, on_delete=models.CASCADE)
 
 class GogokoFilmak(models.Model):
-    filmak_filma = models.ForeignKey(Filma, on_delete=models.CASCADE)
-    filma_bozkatzailea = models.ForeignKey(FilmaBozkatzailea, on_delete=models.CASCADE)
+    filma = models.ForeignKey (Filma, on_delete=models.CASCADE)
+    filma_gogokoa = models.ForeignKey (FilmaBozkatzailea, on_delete=models.CASCADE)

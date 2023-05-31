@@ -11,9 +11,9 @@ def registro(request):
     if request.method == 'POST':
         form = RegistroForm(request.POST)
         if form.is_valid():
-            # Lógica para procesar el formulario de registro
-            form.save()
-            return redirect('home')
+            user = form.save(commit=False)
+            user.save()
+            return redirect('login')  # Redirigir a la página de inicio de sesión después del registro exitoso
     else:
         form = RegistroForm()
     return render(request, 'registro.html', {'form': form})
@@ -22,10 +22,12 @@ def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            user = form.login(request)
-            if user:
-                auth_login(request, user)
-                return redirect('home')
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')  # Redirigir a la página principal después del inicio de sesión
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
