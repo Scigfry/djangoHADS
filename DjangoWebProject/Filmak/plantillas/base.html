@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Título de tu aplicación</title>
+</head>
+<body>
+    <div id="columna-izquierda">
+        {% if user.is_authenticated %}
+            <!-- Si el usuario está autenticado, cargar columna_izquierda_logged.html -->
+            {% include 'Filmak/columna_izquierda_logged.html' %}
+        {% else %}
+            <!-- Si el usuario no está autenticado, cargar columna_izquierda.html -->
+            {% include 'Filmak/columna_izquierda.html' %}
+        {% endif %}
+    </div>
+
+    <div id="contenido-principal">
+        <!-- Aquí se cargará el contenido principal según los enlaces seleccionados -->
+        {% block contenido %}
+        {% endblock %}
+    </div>
+</body>
+</html>
