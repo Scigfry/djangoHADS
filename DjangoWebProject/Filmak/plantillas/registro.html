@@ -1,11 +1,10 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+{% block contenido %}
+    <h1>Registro</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Registrarse</button>
+    </form>
+{% endblock %}

@@ -6,11 +6,11 @@
 <body>
     <div id="columna-izquierda">
         {% if user.is_authenticated %}
-            <!-- Si el usuario está autenticado, cargar columna_izquierda_logged.html -->
-            {% include 'Filmak/columna_izquierda_logged.html' %}
+            <!-- Si el usuario está loggeado, cargar columna_izquierda_logged.html -->
+            {% include 'columna_izquierda_logged.html' %}
         {% else %}
-            <!-- Si el usuario no está autenticado, cargar columna_izquierda.html -->
-            {% include 'Filmak/columna_izquierda.html' %}
+            <!-- Si el usuario no está loggeado, cargar columna_izquierda.html -->
+            {% include 'columna_izquierda.html' %}
         {% endif %}
     </div>
 

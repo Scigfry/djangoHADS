@@ -30,6 +30,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Filmak\forms.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Filmak\models.py">
       <SubType>Code</SubType>
     </Compile>
