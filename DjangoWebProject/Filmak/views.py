@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login as auth_login, logout as auth_logout
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .forms import LoginForm, RegistroForm
-from .models import Filma
+from .models import AuthUser, Filma
 
 def home(request):
     return render(request, 'base.html')
@@ -24,11 +25,20 @@ def login(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
-            print(user)
-            if user is not None:
-                login(request, user)
-                return redirect('index')  # Redirigir a la página principal después del inicio de sesión
+            mensaje = ''
+            try:
+                user = AuthUser.objects.get(username=username)
+                if user.password == password:
+                    auth_login(request, user)
+                    return render(request, 'base.html')
+                else:
+                    # Contraseña incorrecta
+                    mensaje = "Contraseña incorrecta"
+            except AuthUser.DoesNotExist:
+                # Usuario no encontrado
+                mensaje = "El usuario no existe"
+            
+            messages.error(request, mensaje)
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
