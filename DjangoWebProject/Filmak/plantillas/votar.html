@@ -1,11 +1,22 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+{% block contenido %}
+  <h1>Votar películas</h1>
+  
+  <form method="POST" action="{% url 'votar' %}">
+    {% csrf_token %}
+    
+    {% if mensaje %}
+      <p>{{ mensaje }}</p>
+    {% endif %}
+    
+    <label for="pelicula">Selecciona una película:</label>
+    <select id="pelicula" name="pelicula">
+      {% for filma in filmak %}
+        <option value="{{ filma.id }}">{{ filma.izenburua }}</option>
+      {% endfor %}
+    </select>
+    
+    <button type="submit">Votar</button>
+  </form>
+{% endblock %}
