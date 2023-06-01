@@ -1,11 +1,14 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+{% block contenido %}
+  <h1>Votos de las películas</h1>
 
-</body>
-</html>
+  {% for filma, votos_filmak in votos_por_filma.items %}
+    <h3>{{ filma.izenburua }}</h3>
+    {% for voto in votos_filmak %}
+      <p>Voto registrado por el usuario con ID {{ voto.filma_gogokoa.erabiltzailea_id }}</p>
+    {% empty %}
+      <p>No hay votos para esta película.</p>
+    {% endfor %}
+  {% endfor %}
+{% endblock %}

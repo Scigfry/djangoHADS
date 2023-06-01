@@ -99,5 +99,11 @@ def votar(request):
 
 
 def seguidores(request):
-    # Lógica para obtener la información de los seguidores y las películas votadas
-    return render(request, 'seguidores.html')
+    filmak = Filma.objects.all()
+
+    votos_por_filma = {}
+    for filma in filmak:
+        votos = GogokoFilmak.objects.filter(filma=filma.filma)
+        votos_por_filma[filma] = votos
+
+    return render(request, 'seguidores.html', {'votos_por_filma': votos_por_filma})
