@@ -100,10 +100,18 @@ def votar(request):
 
 def seguidores(request):
     filmak = Filma.objects.all()
+    votos = GogokoFilmak.objects.select_related('filma', 'filma_gogokoa__erabiltzailea__auth_user')
 
-    votos_por_filma = {}
-    for filma in filmak:
-        votos = GogokoFilmak.objects.filter(filma=filma.filma)
-        votos_por_filma[filma] = votos
+    pelicula_id = None
+    if 'pelicula' in request.GET:
+        pelicula_id = request.GET['pelicula']
+        if pelicula_id:
+            pelicula_id = int(pelicula_id)
 
-    return render(request, 'seguidores.html', {'votos_por_filma': votos_por_filma})
+    context = {
+        'filmak': filmak,
+        'votos': votos,
+        'pelicula_id': pelicula_id,
+    }
+
+    return render(request, 'seguidores.html', context)

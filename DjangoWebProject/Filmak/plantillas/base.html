@@ -1,17 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Título de tu aplicación</title>
+    <title>Gestor peliculas</title>
+    <style>
+        /* Estilos generales */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Contenedor principal */
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Estilos para el encabezado */
+        .header {
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+        
+        /* Estilos para la columna izquierda */
+        .columna-izquierda {
+            width: 200px;
+            background-color: #e6e6e6;
+            padding: 20px;
+        }
+        
+        /* Estilos para el contenido principal */
+        .contenido-principal {
+            flex: 1;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div id="columna-izquierda">
-        {% include request.session.columna_izquierda_template %}
-    </div>
+    <div class="container">
+        <div class="columna-izquierda">
+            {% include request.session.columna_izquierda_template %}
+        </div>
 
-    <div id="contenido-principal">
-        <!-- Aquí se cargará el contenido principal según los enlaces seleccionados -->
-        {% block contenido %}
-        {% endblock %}
+        <div class="contenido-principal">
+            <div class="header">
+                <h1>Gestor de películas</h1>
+            </div>
+            
+            <!-- Aquí se cargará el contenido principal según los enlaces seleccionados -->
+            {% block contenido %}
+            {% endblock %}
+        </div>
     </div>
 </body>
 </html>
