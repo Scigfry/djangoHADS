@@ -6,7 +6,9 @@ from .forms import LoginForm, RegistroForm
 from .models import AuthUser, Filma
 
 def home(request):
-    return render(request, 'base.html')
+    request.session.setdefault('columna_izquierda_template', 'columna_izquierda.html')
+    columna_izquierda_template = request.session['columna_izquierda_template']
+    return render(request, 'base.html', {'columna_izquierda_template': columna_izquierda_template})
 
 def registro(request):
     if request.method == 'POST':
@@ -25,26 +27,26 @@ def login(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            mensaje = ''
+            
             try:
                 user = AuthUser.objects.get(username=username)
                 if user.password == password:
                     auth_login(request, user)
+                    request.session['columna_izquierda_template'] = 'columna_izquierda_logged.html'
                     return render(request, 'base.html')
                 else:
-                    # Contraseña incorrecta
-                    mensaje = "Contraseña incorrecta"
+                    form.add_error('password', 'Contraseña incorrecta')  # Agregar error al formulario
             except AuthUser.DoesNotExist:
-                # Usuario no encontrado
-                mensaje = "El usuario no existe"
+                form.add_error('username', 'El usuario no existe')  # Agregar error al formulario
             
-            messages.error(request, mensaje)
     else:
         form = LoginForm()
+    
     return render(request, 'login.html', {'form': form})
 
 def logout(request):
     auth_logout(request)
+    request.session['columna_izquierda_template'] = 'columna_izquierda.html'
     return redirect('home')
 
 @login_required

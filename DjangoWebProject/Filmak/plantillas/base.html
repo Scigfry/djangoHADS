@@ -5,13 +5,7 @@
 </head>
 <body>
     <div id="columna-izquierda">
-        {% if user.is_authenticated %}
-            <!-- Si el usuario está loggeado, cargar columna_izquierda_logged.html -->
-            {% include 'columna_izquierda_logged.html' %}
-        {% else %}
-            <!-- Si el usuario no está loggeado, cargar columna_izquierda.html -->
-            {% include 'columna_izquierda.html' %}
-        {% endif %}
+        {% include request.session.columna_izquierda_template %}
     </div>
 
     <div id="contenido-principal">
