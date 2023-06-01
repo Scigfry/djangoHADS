@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.paginator import Paginator
+
 from .forms import LoginForm, RegistroForm
 from .models import AuthUser, Filma
 
@@ -46,22 +48,24 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
+    request.session.setdefault('columna_izquierda_template', 'columna_izquierda.html')
+    columna_izquierda_template = request.session['columna_izquierda_template']
     request.session['columna_izquierda_template'] = 'columna_izquierda.html'
-    return redirect('home')
+    return render(request, 'base.html', {'columna_izquierda_template': columna_izquierda_template})
 
-@login_required
 def ver_pelis(request):
-    films = Filma.objects.all()
-    return render(request, 'ver_pelis.html', {'films': films})
+    filmak_list = Filma.objects.all()
+    paginator = Paginator(filmak_list, 5)  # Muestra 10 películas por página
+    page_number = request.GET.get('page')
+    filmak = paginator.get_page(page_number)
+    return render(request, 'ver_pelis.html', {'filmak': filmak})
 
-@login_required
 def votar(request):
     if request.method == 'POST':
         # Lógica para procesar el formulario de votación
         return redirect('home')
     return render(request, 'votar.html')
 
-@login_required
 def seguidores(request):
     # Lógica para obtener la información de los seguidores y las películas votadas
     return render(request, 'seguidores.html')

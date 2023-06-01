@@ -1,11 +1,51 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+{% block contenido %}
+<table>
+  <thead>
+    <tr>
+      <th>Izenburua</th>
+      <th>Zuzendaria</th>
+      <th>Urtea</th>
+      <th>Generoa</th>
+      <th>Sinopsia</th>
+      <th>Bozkak</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for filma in filmak %}
+    <tr>
+      <td>{{ filma.izenburua }}</td>
+      <td>{{ filma.zuzendaria }}</td>
+      <td>{{ filma.urtea }}</td>
+      <td>{{ filma.generoa }}</td>
+      <td>{{ filma.sinopsia }}</td>
+      <td>{{ filma.bozkak }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
-</body>
-</html>
+<!-- Paginador -->
+<div class="pagination">
+  <span class="step-links">
+    {% if filmak.has_previous %}
+      <a href="?page=1">&laquo; first</a>
+      <a href="?page={{ filmak.previous_page_number }}">previous</a>
+    {% endif %}
+
+    <span class="current-page">{{ filmak.number }}</span>
+
+    {% if filmak.has_next %}
+      <a href="?page={{ filmak.next_page_number }}">next</a>
+      <a href="?page={{ filmak.paginator.num_pages }}">last &raquo;</a>
+    {% endif %}
+  </span>
+</div>
+
+<!-- Formulario de paginación -->
+<form method="GET" action="{% url 'ver_pelis' %}">
+  <input type="text" name="page" placeholder="Ir a página">
+  <input type="submit" value="Ir">
+</form>
+{% endblock %}
