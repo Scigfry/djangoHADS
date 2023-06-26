@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+    <h1>Películas añadidas por el usuario</h1>
+    {% if peliculas %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Izenburua</th>
+                    <th>Zuzendaria</th>
+                    <th>Urtea</th>
+                    <th>Generoa</th>
+                    <th>Sinopsia</th>
+                    <th>Bozkak</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pelicula in peliculas %}
+                    <tr>
+                        <td>{{ pelicula.izenburua }}</td>
+                        <td>{{ pelicula.zuzendaria }}</td>
+                        <td>{{ pelicula.urtea }}</td>
+                        <td>{{ pelicula.generoa }}</td>
+                        <td>{{ pelicula.sinopsia }}</td>
+                        <td>{{ pelicula.bozkak }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No se han añadido películas.</p>
+    {% endif %}
+{% endblock %}

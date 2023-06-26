@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
 
-from .forms import LoginForm, RegistroForm
+from .forms import LoginForm, RegistroForm, AnadirFilmForm
 from .models import AuthUser, Filma, GogokoFilmak, FilmaBozkatzailea, Erabiltzailea
 
 def home(request):
@@ -115,3 +115,29 @@ def seguidores(request):
     }
 
     return render(request, 'seguidores.html', context)
+
+def anadirPelicula(request):
+    if request.method == 'POST':
+        form = AnadirFilmForm(request.POST)
+        if form.is_valid():
+            pelicula = form.save(commit=False)
+            username = request.session['username']
+            user = AuthUser.objects.get(username=username)
+            pelicula.usuario = user
+            pelicula.save()
+            mensaje = 'La película se ha añadido correctamente.'
+            return render(request, 'anadirPelicula.html', {'form': form, 'mensaje': mensaje})
+    else:
+        form = AnadirFilmForm()
+
+    return render(request, 'anadirPelicula.html', {'form': form})
+
+def peliculasUsuario(request):
+    # Obtener el usuario actual
+    username = request.session['username']
+    user = AuthUser.objects.get(username=username)
+
+    # Obtener todas las películas añadidas por el usuario actual
+    peliculas = Filma.objects.filter(usuario=user)
+
+    return render(request, 'peliculasUsuario.html', {'peliculas': peliculas})

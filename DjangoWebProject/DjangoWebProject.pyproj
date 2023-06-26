@@ -46,10 +46,12 @@
     <Compile Include="DjangoWebProject\wsgi.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Filmak\plantillas\anadirPelicula.html" />
     <Content Include="Filmak\plantillas\base.html" />
     <Content Include="Filmak\plantillas\columna_izquierda.html" />
     <Content Include="Filmak\plantillas\columna_izquierda_logged.html" />
     <Content Include="Filmak\plantillas\login.html" />
+    <Content Include="Filmak\plantillas\peliculasUsuario.html" />
     <Content Include="Filmak\plantillas\registro.html" />
     <Content Include="Filmak\plantillas\seguidores.html" />
     <Content Include="Filmak\plantillas\ver_pelis.html" />

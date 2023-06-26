@@ -9,4 +9,6 @@ urlpatterns = [
     path('ver_pelis/', views.ver_pelis, name='ver_pelis'),
     path('votar/', views.votar, name='votar'),
     path('seguidores/', views.seguidores, name='seguidores'),
+    path('anadirPelicula/', views.anadirPelicula, name='anadirPelicula'),
+    path('peliculasUsuario/', views.peliculasUsuario, name='peliculasUsuario'),
 ]

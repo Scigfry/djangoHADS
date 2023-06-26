@@ -14,6 +14,7 @@ class AuthUser(models.Model):
     date_joined = models.DateTimeField(auto_now_add=True)
 
 class Filma(models.Model):
+    usuario = models.ForeignKey(AuthUser, on_delete=models.CASCADE, null=True)
     izenburua = models.CharField(max_length=100)
     zuzendaria = models.CharField(max_length=60)
     urtea = models.IntegerField()
